@@ -6,10 +6,17 @@ class xrowMultiAd
     public static function checkDisplayStatus()
     {
         $xrowmultiadINI = eZINI::instance("xrowmultiad.ini");
-        $display_in_siteaccess = $xrowmultiadINI->variable( 'GeneralSettings', 'Display' );
-        
+        if ( $xrowmultiadINI->hasVariable( 'GeneralSettings', 'Display' ) )
+        {
+            $display_in_siteaccess = $xrowmultiadINI->variable( 'GeneralSettings', 'Display' );
+        }
+        else
+        {
+            $display_in_siteaccess = $xrowmultiadINI->variable( 'GeneralSettings', 'DisplayDefault' );
+        }
+
         //check if the siteaccess is allowed to use ads
-        if ( $display_in_siteaccess )
+        if ( $display_in_siteaccess != "disabled")
         {
             $Module = $GLOBALS['eZRequestedModule'];
             $namedParameters = $Module->NamedParameters;
@@ -55,7 +62,6 @@ class xrowMultiAd
         $xrowmultiadINI = eZINI::instance("xrowmultiad.ini");
         if ( $tpl->hasVariable('module_result') )
         {
-            
             $keywords = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordMatching' );
             $moduleResult = $tpl->variable('module_result');
             foreach ( array_reverse($moduleResult["path"]) as $path_element )
@@ -68,6 +74,14 @@ class xrowMultiAd
             }
         }
         //no keyword found, use the default!
-        return $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordDefault' );
+        if ( $xrowmultiadINI->hasVariable( 'KeywordSettings', 'SiteaccessKeywordDefault' ) )
+        {
+           $default_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'SiteaccessKeywordDefault' );
+        }
+        else
+        {
+            $default_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordDefault' );
+        }
+        return $default_keyword;
     }
 }
