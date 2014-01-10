@@ -128,6 +128,14 @@ class xrowMultiAdOperator
                 case 'omsad':
                 {
                     $dcopt = $xrowmultiadINI->variable( 'OmsSettings', 'dcopt' );
+                    if ( $dcopt == "false")
+                    {
+                        $dcopt = "";
+                    }
+                    else
+                    {
+                        $dcopt = "dcopt=" . $dcopt . ";";
+                    }
                     $random_number = rand();
                     $tile = $namedParameters['tile'];
                     //todo?
@@ -135,7 +143,7 @@ class xrowMultiAdOperator
                     $nielsen_area = "1";
                     $operatorValue = '<script type="text/javascript">
                                         if(typeof(oms_random)=="undefined"){var oms_random=Math.floor(Math.random()*10000000000)}
-                                        document.write(\'<scr\'+\'ipt language="JavaScript" src="http://ad.doubleclick.net/' . $strange_code .  '/adj/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . ';dcopt=' . $dcopt . ';sz=' . $size . ';tile=' . $tile . ';ord=\'+oms_random+\'?"><\/scr\'+\'ipt>\');
+                                        document.write(\'<scr\'+\'ipt language="JavaScript" src="http://ad.doubleclick.net/' . $strange_code .  '/adj/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . ';' . $dcopt . 'sz=' . $size . ';tile=' . $tile . ';ord=\'+oms_random+\'?"><\/scr\'+\'ipt>\');
                                       </script>
                                       <noscript>
                                         <a href="http://ad.doubleclick.net/' . $strange_code .  '/jump/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . ';sz=' . $size . ';tile=' . $tile . ';ord=' . $random_number . '?" target="_blank">
