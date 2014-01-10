@@ -3,4 +3,7 @@
 [TemplateSettings]
 ExtensionAutoloadPath[]=xrowmultiad
 
+[RoleSettings]
+PolicyOmitList[]=oms/test
+
 */ ?>

@@ -64,6 +64,11 @@ class xrowMultiAd
         {
             $keywords = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordMatching' );
             $moduleResult = $tpl->variable('module_result');
+            //write "test" zone for test module
+            if ( $moduleResult["uri"] == "/oms/test" )
+            {
+                return "test";
+            }
             foreach ( array_reverse($moduleResult["path"]) as $path_element )
             {
                 if ( array_key_exists($path_element["node_id"], $keywords) )
