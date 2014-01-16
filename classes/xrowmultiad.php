@@ -39,7 +39,7 @@ class xrowMultiAd
                     $moduleResult = $tpl->variable('module_result');
                     foreach ( $moduleResult["path"] as $path_element )
                     {
-                        if ( in_array( $path_element["node_id"], $tree_excludes ) )
+                        if ( isset($path_element["node_id"]) && in_array( $path_element["node_id"], $tree_excludes ) )
                         {
                             return false;
                         }
@@ -71,7 +71,7 @@ class xrowMultiAd
             }
             foreach ( array_reverse($moduleResult["path"]) as $path_element )
             {
-                if ( array_key_exists($path_element["node_id"], $keywords) )
+                if ( isset($path_element["node_id"]) && array_key_exists($path_element["node_id"], $keywords) )
                 {
                     //stop the foreach and return the matching keyword
                     return $keywords[$path_element["node_id"]];
