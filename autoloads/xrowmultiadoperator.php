@@ -41,9 +41,6 @@ class xrowMultiAdOperator
         if( $show_ads )
         {
             $keyword = xrowMultiAd::getKeyword();
-            //the banner size
-            $size = $namedParameters['size'];
-            $size_parts = explode("x", $size);
             $xrowmultiadINI = eZINI::instance("xrowmultiad.ini");
             $oms_site = $xrowmultiadINI->variable( 'OmsSettings', 'OmsSite' );
             
@@ -127,6 +124,9 @@ class xrowMultiAdOperator
                 break;
                 case 'omsad':
                 {
+                    //the banner size
+                    $size = $namedParameters['size'];
+                    $size_parts = explode("x", $size);
                     $dcopt = $xrowmultiadINI->variable( 'OmsSettings', 'dcopt' );
                     if ( $dcopt == "false")
                     {
@@ -154,6 +154,9 @@ class xrowMultiAdOperator
                 break;
                 case 'openxad':
                 {
+                    //the banner size
+                    $size = $namedParameters['size'];
+                    $size_parts = explode("x", $size);
                     $type = $namedParameters['type'];
                     $random_number = rand();
                     $adservURL = $xrowmultiadINI->variable( "OpenXSettings", "AdserverURL" );
