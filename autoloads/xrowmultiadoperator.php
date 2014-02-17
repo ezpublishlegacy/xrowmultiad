@@ -161,12 +161,59 @@ class xrowMultiAdOperator
                     $random_number = rand();
                     $adservURL = $xrowmultiadINI->variable( "OpenXSettings", "AdserverURL" );
                     $zone_id = $xrowmultiadINI->variable( $type . '_' . $keyword, 'ZoneID' );
+                    $iframe_url = $adservURL . "/delivery/afr.php?zoneid=" . $zone_id . "&amp;cb=". $random_number;
 
-                    $operatorValue = "<iframe id='ad_" . $zone_id . "' name='ad_" . $zone_id . "' src='" . $adservURL . "/delivery/afr.php?zoneid=" . $zone_id . "&amp;cb=". $random_number ."' frameborder='0' scrolling='no' width='" . $size_parts[0] . "' height='" . $size_parts[1] . "'>
-                                        <a href='" . $adservURL . "/delivery/ck.php?n=ad_" . $zone_id . "&amp;cb=". $random_number ."' target='_blank'>
-                                            <img src='" . $adservURL . "/delivery/avw.php?zoneid=" . $zone_id . "&amp;cb=". $random_number ."&amp;n=ad_" . $zone_id . "' border='0' alt='' />
-                                        </a>
-                                      </iframe>";
+                    //check if there is a banner
+                    if ( function_exists( 'curl_init' ) )
+                    {
+                        $url = $iframe_url;
+                        $curl_is_set = true;
+                        $ch = curl_init();
+                        curl_setopt( $ch, CURLOPT_URL, $url );
+                        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false);
+                        curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false);
+                        curl_setopt( $ch, CURLOPT_HEADER, 0 );
+                        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+                        curl_setopt( $ch, CURLOPT_TIMEOUT, 30 );
+                    
+                        $remote_content = curl_exec( $ch );
+                        $info = curl_getinfo( $ch );
+                        if ( $info['http_code'] != 200 )
+                        {
+                            $remote_content = false;
+                            eZDebug::writeError( "URL ($url) is not avialable ", __METHOD__ );
+                        }
+                        curl_close( $ch );
+                        eZDebug::writeDebug( "URL ($url) included", __METHOD__ );
+                    }
+                    else
+                    {
+                        $remote_content = file_get_contents( $url );
+                        if( strlen( trim( $remote_content ) ) == 0 )
+                        {
+                            $remote_content = false;
+                            eZDebug::writeError( "URL ($url) doesn't returned content", __METHOD__ );
+                        }
+                        eZDebug::writeDebug( "URL ($url) included", __METHOD__ );
+                    }
+
+                    $xml = simplexml_load_string($remote_content);
+                    $body = $xml->body;
+
+                    //modify width and height depending on the existance
+                    if ($body[0]->count() >= 1)
+                    {
+                        $width = $size_parts[0];
+                        $height = $size_parts[1];
+                    }
+                    else
+                    {
+                        $width = 0;
+                        $height = 0;
+                    }
+
+                    //inserting the final code
+                    $operatorValue = "<iframe id='ad_" . $zone_id . "' name='ad_" . $zone_id . "' src='" . $iframe_url . "' frameborder='0' scrolling='no' width='" . $width . "' height='" . $height . "'></iframe>";
                 }
                 break;
             }

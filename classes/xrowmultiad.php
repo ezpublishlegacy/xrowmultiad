@@ -34,15 +34,28 @@ class xrowMultiAd
                 //check if the node is excluded by a tree exclude
                 $tree_excludes = $xrowmultiadINI->variable( 'GeneralSettings', 'TreeExcludes' );
                 $tpl = eZTemplate::instance();
+                $path = array();
+                
                 if ( $tpl->hasVariable('module_result') )
                 {
                     $moduleResult = $tpl->variable('module_result');
-                    foreach ( $moduleResult["path"] as $path_element )
+                    foreach ( $moduleResult["path"] as $element )
                     {
-                        if ( isset($path_element["node_id"]) && in_array( $path_element["node_id"], $tree_excludes ) )
-                        {
-                            return false;
-                        }
+                        $path[] = $element["node_id"];
+                    }
+                    
+                }
+                else if ( isset( $tpl->Variables[""]["node"] ) )
+                {
+                    //fallback just in case
+                    $path = $tpl->Variables[""]["node"]->pathArray();
+                }
+
+                foreach ( $path as $path_element )
+                {
+                    if ( isset($path_element) && in_array( $path_element, $tree_excludes ) )
+                    {
+                        return false;
                     }
                 }
             }
@@ -60,24 +73,43 @@ class xrowMultiAd
         //checks the path array reversive for a matching keyword inside the ini
         $tpl = eZTemplate::instance();
         $xrowmultiadINI = eZINI::instance("xrowmultiad.ini");
+        $path = array();
+        $uri = "";
+		#return "test";
+        
         if ( $tpl->hasVariable('module_result') )
         {
-            $keywords = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordMatching' );
             $moduleResult = $tpl->variable('module_result');
-            //write "test" zone for test module
-            if ( $moduleResult["uri"] == "/oms/test" )
+            $uri = $moduleResult["uri"];
+            
+            foreach ( $moduleResult["path"] as $element )
             {
-                return "test";
+                $path[] = $element["node_id"];
             }
-            foreach ( array_reverse($moduleResult["path"]) as $path_element )
+            
+        }
+        else if ( isset( $tpl->Variables[""]["node"] ) )
+        {
+            //fallback just in case
+            $path = $tpl->Variables[""]["node"]->pathArray();
+            $uri = $GLOBALS["request_uri"];
+        }
+        
+        $keywords = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordMatching' );
+        //write "test" zone for test module
+        if ( $uri == "/oms/test" )
+        {
+            return "test";
+        }
+        foreach ( array_reverse( $path ) as $path_element )
+        {
+            if ( isset($path_element) && array_key_exists($path_element, $keywords) )
             {
-                if ( isset($path_element["node_id"]) && array_key_exists($path_element["node_id"], $keywords) )
-                {
-                    //stop the foreach and return the matching keyword
-                    return $keywords[$path_element["node_id"]];
-                }
+                //stop the foreach and return the matching keyword
+                return $keywords[$path_element];
             }
         }
+
         //no keyword found, use the default!
         if ( $xrowmultiadINI->hasVariable( 'KeywordSettings', 'SiteaccessKeywordDefault' ) )
         {
