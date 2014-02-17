@@ -3,5 +3,5 @@
     {if $block.name}
         <div class="heading">{$block.name|wash()}</div>
     {/if}
-    {openxad("fullbanner","515x60")}
+    {openxad("fullbanner","515x60", "", $#node)}
 </div>

@@ -68,15 +68,16 @@ class xrowMultiAd
         }
     }
 
-    public static function getKeyword()
+    public static function getKeyword( $node = false )
     {
         //checks the path array reversive for a matching keyword inside the ini
         $tpl = eZTemplate::instance();
         $xrowmultiadINI = eZINI::instance("xrowmultiad.ini");
         $path = array();
         $uri = "";
-		#return "test";
-        
+        //activate this to run testmode everywhere
+        //return "test";
+
         if ( $tpl->hasVariable('module_result') )
         {
             $moduleResult = $tpl->variable('module_result');
@@ -94,7 +95,13 @@ class xrowMultiAd
             $path = $tpl->Variables[""]["node"]->pathArray();
             $uri = $GLOBALS["request_uri"];
         }
-        
+        else if ($node != false && $node instanceof eZContentObjectTreeNode )
+        {
+            //fallback of the fallback
+            $path = explode("/", $node->PathString);
+            $uri = $node->urlAlias();
+        }
+
         $keywords = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordMatching' );
         //write "test" zone for test module
         if ( $uri == "/oms/test" )
@@ -113,7 +120,7 @@ class xrowMultiAd
         //no keyword found, use the default!
         if ( $xrowmultiadINI->hasVariable( 'KeywordSettings', 'SiteaccessKeywordDefault' ) )
         {
-           $default_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'SiteaccessKeywordDefault' );
+            $default_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'SiteaccessKeywordDefault' );
         }
         else
         {

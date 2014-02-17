@@ -30,7 +30,8 @@ class xrowMultiAdOperator
                              ),
             'openxad' => array( 'type' => array( 'type' => 'string' ,  'required' => false ), 
                                 'size' => array( 'type' => 'string' ,  'required' => true),
-                                'matchID' => array( 'type' => 'string' ,  'required' => false )
+                                'matchID' => array( 'type' => 'string' ,  'required' => false ),
+                                'node' => array( 'type' => 'string' ,  'required' => false )
                              )
         );
     }
@@ -40,7 +41,16 @@ class xrowMultiAdOperator
         $show_ads = xrowMultiAd::checkDisplayStatus();
         if( $show_ads )
         {
-            $keyword = xrowMultiAd::getKeyword();
+            if ( isset ( $namedParameters['node'] ) )
+			{
+				$node = $namedParameters['node'];
+			}
+			else
+			{
+				$node = false;
+			}
+			
+            $keyword = xrowMultiAd::getKeyword( $node );
             $xrowmultiadINI = eZINI::instance("xrowmultiad.ini");
             $oms_site = $xrowmultiadINI->variable( 'OmsSettings', 'OmsSite' );
             
