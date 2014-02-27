@@ -42,15 +42,27 @@ class xrowMultiAdOperator
         if( $show_ads )
         {
             if ( isset ( $namedParameters['node'] ) )
-			{
-				$node = $namedParameters['node'];
-			}
-			else
-			{
-				$node = false;
-			}
-			
-            $keyword = xrowMultiAd::getKeyword( $node );
+            {
+                $node = $namedParameters['node'];
+            }
+            else
+            {
+                $node = false;
+            }
+
+            $keyword_info = xrowMultiAd::getKeyword( $node );
+            $keyword = $keyword_info["keyword"];
+            $path = $keyword_info["path"];
+
+            if ( empty($path) )
+            {
+                $appendix = ";NodeID=" . $GLOBALS['eZRequestedModuleParams']["module_name"] . "_" . $GLOBALS['eZRequestedModuleParams']["function_name"] . ";";
+            }
+            else
+            {
+                $appendix = ";NodeID=" . end($path) .";Tree=" . implode("-", $path);
+            }
+
             $xrowmultiadINI = eZINI::instance("xrowmultiad.ini");
             $oms_site = $xrowmultiadINI->variable( 'OmsSettings', 'OmsSite' );
             
@@ -156,8 +168,8 @@ class xrowMultiAdOperator
                                         document.write(\'<scr\'+\'ipt language="JavaScript" src="http://ad.doubleclick.net/' . $strange_code .  '/adj/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . ';' . $dcopt . 'sz=' . $size . ';tile=' . $tile . ';ord=\'+oms_random+\'?"><\/scr\'+\'ipt>\');
                                       </script>
                                       <noscript>
-                                        <a href="http://ad.doubleclick.net/' . $strange_code .  '/jump/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . ';sz=' . $size . ';tile=' . $tile . ';ord=' . $random_number . '?" target="_blank">
-                                        <img src="http://ad.doubleclick.net/' . $strange_code .  '/ad/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . ';sz=' . $size . ';tile=' . $tile . ';ord=' . $random_number . '?" border="0" width="' . $size_parts[0] . '" height="' . $size_parts[1] . '">
+                                        <a href="http://ad.doubleclick.net/' . $strange_code .  '/jump/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . ';sz=' . $size . ';tile=' . $tile . ';ord=' . $random_number .  $appendix . '?" target="_blank">
+                                        <img src="http://ad.doubleclick.net/' . $strange_code .  '/ad/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . ';sz=' . $size . ';tile=' . $tile . ';ord=' . $random_number .  $appendix . '?" border="0" width="' . $size_parts[0] . '" height="' . $size_parts[1] . '">
                                         </a>
                                       </noscript>';
                 }
@@ -223,7 +235,7 @@ class xrowMultiAdOperator
                     }
 
                     //inserting the final code
-                    $operatorValue = "<iframe id='ad_" . $zone_id . "' name='ad_" . $zone_id . "' src='" . $iframe_url . "' frameborder='0' scrolling='no' width='" . $width . "' height='" . $height . "'></iframe>";
+                    $operatorValue = "<iframe id='ad_" . $zone_id . "' name='ad_" . $zone_id . "' src='" . $iframe_url . $appendix . "' frameborder='0' scrolling='no' width='" . $width . "' height='" . $height . "'></iframe>";
                 }
                 break;
             }

@@ -82,12 +82,14 @@ class xrowMultiAd
         {
             $moduleResult = $tpl->variable('module_result');
             $uri = $moduleResult["uri"];
-            
+
             foreach ( $moduleResult["path"] as $element )
             {
-                $path[] = $element["node_id"];
+                if ( isset( $element["node_id"] ) )
+                {
+                    $path[] = $element["node_id"];
+                }
             }
-            
         }
         else if ( isset( $tpl->Variables[""]["node"] ) )
         {
@@ -106,14 +108,14 @@ class xrowMultiAd
         //write "test" zone for test module
         if ( $uri == "/oms/test" )
         {
-            return "test";
+            return array( "keyword" => "test", "path" => $path );
         }
         foreach ( array_reverse( $path ) as $path_element )
         {
             if ( isset($path_element) && array_key_exists($path_element, $keywords) )
             {
                 //stop the foreach and return the matching keyword
-                return $keywords[$path_element];
+                return array( "keyword" => $keywords[$path_element], "path" => $path );
             }
         }
 
@@ -126,6 +128,6 @@ class xrowMultiAd
         {
             $default_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordDefault' );
         }
-        return $default_keyword;
+        return array( "keyword" => $default_keyword, "path" => $path );
     }
 }
