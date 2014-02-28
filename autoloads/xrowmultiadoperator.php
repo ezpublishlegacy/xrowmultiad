@@ -60,7 +60,7 @@ class xrowMultiAdOperator
             }
             else
             {
-                $appendix = ";NodeID=" . end($path) .";Tree=" . implode("-", $path);
+                $appendix = ";NodeID=" . end($path) . ";Tree=" . implode("-", $path) . ";";
             }
 
             $xrowmultiadINI = eZINI::instance("xrowmultiad.ini");
