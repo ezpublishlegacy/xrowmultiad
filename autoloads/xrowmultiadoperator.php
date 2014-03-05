@@ -235,7 +235,7 @@ class xrowMultiAdOperator
                     }
 
                     //inserting the final code
-                    $operatorValue = "<iframe id='ad_" . $zone_id . "' name='ad_" . $zone_id . "' src='" . $iframe_url . $appendix . "' frameborder='0' scrolling='no' width='" . $width . "' height='" . $height . "'></iframe>";
+                    $operatorValue = "<iframe id='ad_" . $zone_id . "' name='ad_" . $zone_id . "' src='" . $iframe_url . "' frameborder='0' scrolling='no' width='" . $width . "' height='" . $height . "'></iframe>";
                 }
                 break;
             }
