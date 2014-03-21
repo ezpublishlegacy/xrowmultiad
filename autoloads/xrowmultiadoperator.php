@@ -70,78 +70,31 @@ class xrowMultiAdOperator
             {
                 case 'join_ad_basics':
                 {
-                    $operatorValue = '<script type="text/javascript">
+                    $operatorValue = '<script language="JavaScript" type="text/javascript">
                                         var oms_site = "' . $oms_site . '"; 
                                         var oms_zone = "' . $keyword . '";
                                       </script>
-                                      <script type="text/javascript" src="/extension/xrowmultiad/design/xrowmultiad/javascript/omsv.js"></script>
-                                      <script type="text/javascript">
-                                        if (typeof(wl13015camp) != "undefined"){
-                                        if(wl13015camp > 0){
-                                        WLRCMD+=\'rect=1;\';
-                                        }}
-                                        if (typeof(wl13016camp) != "undefined"){
-                                        if(wl13016camp > 0){
-                                        WLRCMD+=\'lead=1;\';
-                                        }}
-                                        if (typeof(wl13027camp) != "undefined"){
-                                        if(wl13027camp > 0){
-                                        WLRCMD+=\'sky=1;\';
-                                        }}
-                                        if (typeof(wl13028camp) != "undefined"){
-                                        if(wl13028camp > 0){
-                                        WLRCMD+=\'wall=1;\';
-                                        }}
-                                        if (typeof(wl13029camp) != "undefined"){
-                                        if(wl13029camp > 0){
-                                        WLRCMD+=\'layer=1;\';
-                                        }}
-                                        if (typeof(wl13030camp) != "undefined"){
-                                        if(wl13030camp > 0){
-                                        WLRCMD+=\'band=1;\';
-                                        }}
-                                        if (typeof(wl13032camp) != "undefined"){
-                                        if(wl13032camp > 0){
-                                        WLRCMD+=\'half=1;\';
-                                        }}
-                                        if (typeof(wl13031camp) != "undefined"){
-                                        if(wl13031camp > 0){
-                                        WLRCMD+=\'tandem=1;\';
-                                        }}
-                                        if (typeof(wl13019camp) != "undefined"){
-                                        if(wl13019camp > 0){
-                                        WLRCMD+=\'p1=1;\';
-                                        }}
-                                        if (typeof(wl13020camp) != "undefined"){
-                                        if(wl13020camp > 0){
-                                        WLRCMD+=\'p2=1;\';
-                                        }}
-                                        if (typeof(wl13021camp) != "undefined"){
-                                        if(wl13021camp > 0){
-                                        WLRCMD+=\'p3=1;\';
-                                        }}
-                                        if (typeof(wl13023camp) != "undefined"){
-                                        if(wl13023camp > 0){
-                                        WLRCMD+=\'bill=1;\';
-                                        }}
-                                        if (typeof(wl13024camp) != "undefined"){
-                                        if(wl13024camp > 0){
-                                        WLRCMD+=\'eWp=1;\';
-                                        }}
-                                        if (typeof(wl13025camp) != "undefined"){
-                                        if(wl13025camp > 0){
-                                        WLRCMD+=\'eSk=1;\';
-                                        }}
-                                        if (typeof(wl13017camp) != "undefined"){
-                                        if(wl13017camp > 0){
-                                        WLRCMD+=\'eSb=1;\';
-                                        }}
-                                        if (typeof(wl13018camp) != "undefined"){
-                                        if(wl13018camp > 0){
-                                        WLRCMD+=\'t_hp=1;\';
-                                        }}
-                                        WLRCMD=WLRCMD+segQS;
-                                    </script>';
+                                      <script type="text/javascript" src="/extension/xrowmultiad/design/xrowmultiad/javascript/omsvjs14_1.js"></script>
+                                      <script>
+                                        try
+                                           {
+                                          var ystr="";
+                                          var y_adj="";
+                                        
+                                        for (var id in yl.YpResult.getAll()) {
+                                        
+                                        c = yl.YpResult.get(id);
+                                        ystr+= \';y_ad=\'+c.id;
+                                         if(c.format){
+                                         y_adj=\';y_adj=\'+c.format;
+                                        	}
+                                        }
+                                        ystr+=y_adj+';'; 
+                                        WLRCMD=WLRCMD+ystr+segQS+crtg_content;
+                                         }
+                                        catch(err)
+                                           {}
+                                          </script>';
                 }
                 break;
                 case 'omsad':
