@@ -89,7 +89,7 @@ class xrowMultiAdOperator
                                          y_adj=\';y_adj=\'+c.format;
                                         	}
                                         }
-                                        ystr+=y_adj+';'; 
+                                        ystr+=y_adj+\';\'; 
                                         WLRCMD=WLRCMD+ystr+segQS+crtg_content;
                                          }
                                         catch(err)
