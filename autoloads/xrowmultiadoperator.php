@@ -116,11 +116,11 @@ class xrowMultiAdOperator
                     //todo?
                     $strange_code = "N5766";
                     $nielsen_area = "1";
-                    $operatorValue = '<script type="text/javascript">
+                    $operatorValue = '{literal}<script type="text/javascript">
                                         if(typeof(WLRCMD)=="undefined"){var WLRCMD="";}
                                         if(typeof(oms_random)=="undefined"){var oms_random=Math.floor(Math.random()*10000000000)}
                                         document.write(\'<scr\'+\'ipt language="JavaScript" src="http://ad.doubleclick.net/' . $strange_code .  '/adj/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . $appendix . $dcopt . 'sz=' . $size . ';tile=' . $tile . ';ord=\'+oms_random+\'?"><\/scr\'+\'ipt>\');
-                                      </script>
+                                      </script>{/literal}
                                       <noscript>
                                         <a href="http://ad.doubleclick.net/' . $strange_code .  '/jump/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . $appendix . 'sz=' . $size . ';tile=' . $tile . ';ord=' . $random_number . '?" target="_blank">
                                         <img src="http://ad.doubleclick.net/' . $strange_code .  '/ad/' . $oms_site . '/' . $keyword . ';oms=' . $keyword . ';nielsen=' . $nielsen_area . $appendix . 'sz=' . $size . ';tile=' . $tile . ';ord=' . $random_number . '?" border="0" width="' . $size_parts[0] . '" height="' . $size_parts[1] . '">
