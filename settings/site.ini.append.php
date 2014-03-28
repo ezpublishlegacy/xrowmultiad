@@ -6,4 +6,8 @@ ExtensionAutoloadPath[]=xrowmultiad
 [RoleSettings]
 PolicyOmitList[]=oms/test
 
+
+[RegionalSettings]
+TranslationExtensions[]=xrowmultiad
+
 */ ?>
