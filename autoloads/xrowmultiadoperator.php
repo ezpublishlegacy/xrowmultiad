@@ -188,12 +188,12 @@ class xrowMultiAdOperator
                         $height = 0;
                     }
 
-                    $html_snippet = "<iframe id='ad_" . $zone_id . "' name='ad_" . $zone_id . "' src='" . $iframe_url . "' frameborder='0' scrolling='no' width='" . $width . "' height='" . $height . "'></iframe>";
+                    $html_snippet = "<iframe id='ad_" . $zone_id . '_' . $random_number . "' name='ad_" . $zone_id . "' src='" . $iframe_url . "' frameborder='0' scrolling='no' width='" . $width . "' height='" . $height . "'></iframe>";
 
                     //add ad-sign wrapper
                     if ( $width != 0 )
                     {
-                        $html_snippet = '<div class="ad_wrapper"><span>' . ezpI18n::tr( 'extension/xrowmultiad', 'Advertisement' ) . '</span>' . $html_snippet . '</div>'; 
+                        $html_snippet = '<div class="ad_wrapper" style="width: ' . $width . 'px;"><span>' . ezpI18n::tr( 'extension/xrowmultiad', 'Advertisement' ) . '</span>' . $html_snippet . '</div>'; 
                     }
 
                     $operatorValue = $html_snippet;
