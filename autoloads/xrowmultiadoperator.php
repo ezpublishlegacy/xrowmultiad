@@ -87,7 +87,7 @@ class xrowMultiAdOperator
                                         ystr+= \';y_ad=\'+c.id;
                                          if(c.format){
                                          y_adj=\';y_adj=\'+c.format;
-                                        	}
+                                            }
                                         }
                                         ystr+=y_adj+\';\'; 
                                         WLRCMD=WLRCMD+ystr+segQS+crtg_content;
@@ -157,7 +157,7 @@ class xrowMultiAdOperator
                         if ( $info['http_code'] != 200 )
                         {
                             $remote_content = false;
-                            eZDebug::writeError( "URL ($url) is not avialable ", __METHOD__ );
+                            eZDebug::writeError( "URL ($url) is not available ", __METHOD__ );
                         }
                         curl_close( $ch );
                         eZDebug::writeDebug( "URL ($url) included", __METHOD__ );
@@ -181,6 +181,17 @@ class xrowMultiAdOperator
                     {
                         $width = $size_parts[0];
                         $height = $size_parts[1];
+
+                        //trying to fix the width and height if the size is not on maximum
+                        if ( (int)$xml->body->a->img[0]["width"] AND (int)$xml->body->a->img[0]["width"] != 0)
+                        {
+                            $width = (int)$xml->body->a->img[0]["width"];
+                        }
+                        
+                        if ( (int)$xml->body->a->img[0]["height"] AND (int)$xml->body->a->img[0]["height"] != 0)
+                        {
+                            $height = (int)$xml->body->a->img[0]["height"];
+                        }
                     }
                     else
                     {
