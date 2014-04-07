@@ -105,29 +105,56 @@ class xrowMultiAd
         }
 
         $keywords = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordMatching' );
+        $ivw_keywords = $xrowmultiadINI->variable( 'KeywordSettings', 'IVWMatching' );
         //write "test" zone for test module
         if ( $uri == "/oms/test" )
         {
-            return array( "keyword" => "test", "path" => $path );
+            return array( "keyword" => "test", "path" => $path, "ivw_keyword" => "test" );
         }
         foreach ( array_reverse( $path ) as $path_element )
         {
             if ( isset($path_element) && array_key_exists($path_element, $keywords) )
             {
                 //stop the foreach and return the matching keyword
-                return array( "keyword" => $keywords[$path_element], "path" => $path );
+                $normal_keyword = $keywords[$path_element];
+                break;
             }
         }
 
+        foreach ( array_reverse( $path ) as $path_element )
+        {
+            if ( isset($path_element) && array_key_exists($path_element, $ivw_keywords) )
+            {
+                //stop the foreach and return the matching keyword
+                $ivw_keyword = $ivw_keywords[$path_element];
+                break;
+            }
+        }
+
+        if (isset($normal_keyword) && isset($ivw_keyword) )
+        {
+            return array( "keyword" => $normal_keyword, "path" => $path, "ivw_keyword" => $ivw_keyword );
+        }
+
         //no keyword found, use the default!
-        if ( $xrowmultiadINI->hasVariable( 'KeywordSettings', 'SiteaccessKeywordDefault' ) )
+        if ( !isset($normal_keyword) && $xrowmultiadINI->hasVariable( 'KeywordSettings', 'SiteaccessKeywordDefault' ) )
         {
-            $default_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'SiteaccessKeywordDefault' );
+            $normal_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'SiteaccessKeywordDefault' );
         }
-        else
+        elseif( !isset($normal_keyword) )
         {
-            $default_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordDefault' );
+            $normal_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordDefault' );
         }
-        return array( "keyword" => $default_keyword, "path" => $path );
+
+        //no ivw keyword found, use the default!
+        if ( $xrowmultiadINI->hasVariable( 'KeywordSettings', 'SiteaccessIVWKeywordDefault' ) )
+        {
+            $ivw_keyword = $xrowmultiadINI->variable( 'KeywordSettings', 'SiteaccessIVWKeywordDefault' );
+        }
+        elseif( !isset($ivw_keyword) )
+        {
+            $ivw_keyword = $xrowmultiadINI->variable( 'IVWSettings', 'KeywordDefault' );
+        }
+        return array( "keyword" => $normal_keyword, "path" => $path, "ivw_keyword" => $ivw_keyword );
     }
 }

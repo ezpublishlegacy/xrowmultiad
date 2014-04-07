@@ -10,7 +10,7 @@ class xrowMultiAdOperator
     function operatorList()
     {
         return array(
-            'omsad', 'openxad', 'join_ad_basics'
+            'omsad', 'openxad', 'join_ad_basics', 'ivw_addon'
         );
     }
 
@@ -32,7 +32,8 @@ class xrowMultiAdOperator
                                 'size' => array( 'type' => 'string' ,  'required' => true),
                                 'matchID' => array( 'type' => 'string' ,  'required' => false ),
                                 'node' => array( 'type' => 'string' ,  'required' => false )
-                             )
+                             ),
+            'ivw_addon' => array()
         );
     }
 
@@ -53,6 +54,7 @@ class xrowMultiAdOperator
             $keyword_info = xrowMultiAd::getKeyword( $node );
             $keyword = $keyword_info["keyword"];
             $path = $keyword_info["path"];
+            $keyword_ivw = $keyword_info["ivw_keyword"];
 
             if ( empty($path) )
             {
@@ -75,6 +77,7 @@ class xrowMultiAdOperator
                                         var oms_zone = "' . $keyword . '";
                                       </script>
                                       <script type="text/javascript" src="/extension/xrowmultiad/design/xrowmultiad/javascript/omsvjs14_1.js"></script>
+                                      <script type="text/javascript" src="/extension/xrowmultiad/design/xrowmultiad/javascript/iam.js"></script> 
                                       <script>
                                         try
                                            {
@@ -208,6 +211,22 @@ class xrowMultiAdOperator
                     }
 
                     $operatorValue = $html_snippet;
+                }
+                break;
+                case 'ivw_addon':
+                {
+                    $operatorValue = '<!-- SZM VERSION="2.0" --> 
+                                    <script type="text/javascript"> 
+                                    var iam_data = { 
+                                    "mg":"yes", // Migrationsmodus AKTIVIERT 
+                                    "st":"hannovin", // site
+                                    "cp":"' . $keyword_ivw . '", // code SZMnG-System 2.0
+                                    "oc":"' . $keyword_ivw . '", // code SZM-System 1.5 
+                                    "sv":"in" 
+                                    } 
+                                    iom.c(iam_data); 
+                                    </script> 
+                                    <!--/SZM --> ';
                 }
                 break;
             }
