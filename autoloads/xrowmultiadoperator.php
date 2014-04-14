@@ -77,7 +77,7 @@ class xrowMultiAdOperator
                                         var oms_zone = "' . $keyword . '";
                                       </script>
                                       <script type="text/javascript" src="/extension/xrowmultiad/design/xrowmultiad/javascript/omsvjs14_1.js"></script>
-                                      <script type="text/javascript" src="/extension/xrowmultiad/design/xrowmultiad/javascript/iam.js"></script> 
+                                      <script type="text/javascript" src="http://script.ioam.de/iam.js"></script> 
                                       <script>
                                         try
                                            {
