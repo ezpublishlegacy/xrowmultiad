@@ -77,7 +77,6 @@ class xrowMultiAdOperator
                                         var oms_zone = "' . $keyword . '";
                                       </script>
                                       <script type="text/javascript" src="/extension/xrowmultiad/design/xrowmultiad/javascript/omsvjs14_1.js"></script>
-                                      <script type="text/javascript" src="http://script.ioam.de/iam.js"></script> 
                                       <script>
                                         try
                                            {
@@ -232,7 +231,8 @@ class xrowMultiAdOperator
                 $keyword_ivw = $keyword_info["ivw_keyword"];
             }
             
-            $operatorValue = '<!-- SZM VERSION="2.0" --> 
+            $operatorValue = '<script type="text/javascript" src="http://script.ioam.de/iam.js"></script>
+                              <!-- SZM VERSION="2.0" --> 
                                 <script type="text/javascript"> 
                                 var iam_data = { 
                                 "mg":"yes", // Migrationsmodus AKTIVIERT 
