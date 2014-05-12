@@ -213,23 +213,37 @@ class xrowMultiAdOperator
                     $operatorValue = $html_snippet;
                 }
                 break;
-                case 'ivw_addon':
-                {
-                    $operatorValue = '<!-- SZM VERSION="2.0" --> 
-                                    <script type="text/javascript"> 
-                                    var iam_data = { 
-                                    "mg":"yes", // Migrationsmodus AKTIVIERT 
-                                    "st":"hannovin", // site
-                                    "cp":"' . $keyword_ivw . '", // code SZMnG-System 2.0
-                                    "oc":"' . $keyword_ivw . '", // code SZM-System 1.5 
-                                    "sv":"in" 
-                                    } 
-                                    iom.c(iam_data); 
-                                    </script> 
-                                    <!--/SZM --> ';
-                }
-                break;
             }
+        }
+        if ($operatorName == "ivw_addon")
+        {
+            if ( !isset($keyword_ivw) )
+            {
+                if ( isset ( $namedParameters['node'] ) )
+                {
+                    $node = $namedParameters['node'];
+                }
+                else
+                {
+                    $node = false;
+                }
+                
+                $keyword_info = xrowMultiAd::getKeyword( $node );
+                $keyword_ivw = $keyword_info["ivw_keyword"];
+            }
+            
+            $operatorValue = '<!-- SZM VERSION="2.0" --> 
+                                <script type="text/javascript"> 
+                                var iam_data = { 
+                                "mg":"yes", // Migrationsmodus AKTIVIERT 
+                                "st":"hannovin", // site
+                                "cp":"' . $keyword_ivw . '", // code SZMnG-System 2.0
+                                "oc":"' . $keyword_ivw . '", // code SZM-System 1.5 
+                                "sv":"in" 
+                                } 
+                                iom.c(iam_data); 
+                                </script> 
+                                <!--/SZM --> ';
         }
     }
 }
