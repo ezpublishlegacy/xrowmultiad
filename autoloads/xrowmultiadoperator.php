@@ -230,20 +230,19 @@ class xrowMultiAdOperator
                 $keyword_info = xrowMultiAd::getKeyword( $node );
                 $keyword_ivw = $keyword_info["ivw_keyword"];
             }
-            
-            $operatorValue = '<script type="text/javascript" src="http://script.ioam.de/iam.js"></script>
-                              <!-- SZM VERSION="2.0" --> 
+
+            $operatorValue = '<!-- SZM VERSION="2.0" --> 
                                 <script type="text/javascript"> 
                                 var iam_data = { 
                                 "mg":"yes", // Migrationsmodus AKTIVIERT 
                                 "st":"hannovin", // site
                                 "cp":"' . $keyword_ivw . '", // code SZMnG-System 2.0
                                 "oc":"' . $keyword_ivw . '", // code SZM-System 1.5 
-                                "sv":"in" 
+                                "sv":"' . $keyword_info["ivw_sv"] . '" 
                                 } 
                                 iom.c(iam_data); 
                                 </script> 
-                                <!--/SZM --> ';
+                                <!--/SZM -->';
         }
     }
 }

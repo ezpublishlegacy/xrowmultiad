@@ -130,10 +130,16 @@ class xrowMultiAd
                 break;
             }
         }
+        
+        $ivw_sv = "in";
+        if( end($path) == $xrowmultiadINI->variable( 'IVWSettings', 'StartPage' ) )
+        {
+            $ivw_sv = "ke";
+        }
 
         if (isset($normal_keyword) && isset($ivw_keyword) )
         {
-            return array( "keyword" => $normal_keyword, "path" => $path, "ivw_keyword" => $ivw_keyword );
+            return array( "keyword" => $normal_keyword, "path" => $path, "ivw_keyword" => $ivw_keyword, "ivw_sv" => $ivw_sv );
         }
 
         //no keyword found, use the default!
@@ -155,6 +161,6 @@ class xrowMultiAd
         {
             $ivw_keyword = $xrowmultiadINI->variable( 'IVWSettings', 'KeywordDefault' );
         }
-        return array( "keyword" => $normal_keyword, "path" => $path, "ivw_keyword" => $ivw_keyword );
+        return array( "keyword" => $normal_keyword, "path" => $path, "ivw_keyword" => $ivw_keyword, "ivw_sv" => $ivw_sv );
     }
 }
