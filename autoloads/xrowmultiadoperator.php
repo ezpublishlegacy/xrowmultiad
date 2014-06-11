@@ -231,6 +231,9 @@ class xrowMultiAdOperator
                 $keyword_ivw = $keyword_info["ivw_keyword"];
             }
 
+            //hotix
+            $keyword_info["ivw_sv"] = "ke";
+
             $operatorValue = '<!-- SZM VERSION="2.0" --> 
                                 <script type="text/javascript"> 
                                 var iam_data = { 
