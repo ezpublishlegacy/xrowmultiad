@@ -111,6 +111,11 @@ class xrowMultiAd
         {
             return array( "keyword" => "test", "path" => $path, "ivw_keyword" => "test" );
         }
+        else if( strpos($uri, "content/search") )
+        {
+            return array( "keyword" => $xrowmultiadINI->variable( 'KeywordSettings', 'KeywordDefault' ), "path" => $path, "ivw_keyword" => "suche", "ivw_sv" => "in" );
+        }
+
         foreach ( array_reverse( $path ) as $path_element )
         {
             if ( isset($path_element) && array_key_exists($path_element, $keywords) )
@@ -135,6 +140,10 @@ class xrowMultiAd
         if( end($path) == $xrowmultiadINI->variable( 'IVWSettings', 'StartPage' ) )
         {
             $ivw_sv = "ke";
+        }
+        elseif ( $ivw_keyword === $ivw_keywords[$xrowmultiadINI->variable( 'IVWSettings', 'StartPage' )] )
+        {
+            unset($ivw_keyword);
         }
 
         if (isset($normal_keyword) && isset($ivw_keyword) )
