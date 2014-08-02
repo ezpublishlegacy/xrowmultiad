@@ -187,7 +187,7 @@ class xrowMultiAdOperator
                     $body = $xml->body;
 
                     //modify width and height depending on the existance
-                    if ($body[0]->count() >= 1)
+                    if ( isset( $body[0] ) and $body[0]->count() >= 1)
                     {
                         $width = $size_parts[0];
                         $height = $size_parts[1];
