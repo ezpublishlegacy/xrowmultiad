@@ -39,6 +39,9 @@ class xrowMultiAdOperator
 
     function modify( $tpl, $operatorName, $operatorParameters, &$rootNamespace, &$currentNamespace, &$operatorValue, &$namedParameters )
     {
+        eZDebug::createAccumulatorGroup( 'ad_total', 'Ad Integration' );
+        eZDebug::accumulatorStart( 'ad_render', 'ad_total', 'Render AD' );
+        
         $show_ads = xrowMultiAd::checkDisplayStatus();
         if( $show_ads )
         {
@@ -255,6 +258,7 @@ class xrowMultiAdOperator
                                 </script> 
                                 <!--/SZM -->';
         }
+        eZDebug::accumulatorStop( 'ad_render' );
     }
 }
 
